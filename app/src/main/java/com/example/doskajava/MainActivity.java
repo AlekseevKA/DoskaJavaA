@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView nav_view;
     private DrawerLayout drawerLayout;
     private FirebaseAuth mAuth;
+    private TextView userEmail;
 
 
 
@@ -43,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     {
         nav_view = findViewById(R.id.nav_view);
         nav_view.setNavigationItemSelectedListener(this);
+
+        userEmail = nav_view.getHeaderView(0).findViewById(R.id.tvEmail);
+
         drawerLayout = findViewById(GravityCompat.START);
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -56,7 +60,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStart() {
         super.onStart();
+        getUserData();
+
+    }
+    private void getUserData()
+    {
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null)
+        {
+            userEmail.setText(currentUser.getEmail());
+        }
+        else{
+            userEmail.setText(R.string.sign_in_or_ign_up);
+        }
 
     }
 
@@ -93,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(this, "Pressed id sign in", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.id_sign_out:
+                signOut();
                 Toast.makeText(this, "Pressed id sign out", Toast.LENGTH_SHORT).show();
                 break;
 
@@ -109,19 +126,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                if(user != null)Log.d("MyLogMainActivity", "createUserWithEmail:success " + user.getEmail());
+                                if(user != null){
+                                    Toast.makeText(getApplicationContext(), "SignUp done... user email: " + user.getEmail(),
+                                            Toast.LENGTH_SHORT).show();
+                                    Log.d("MyLogMainActivity", "createUserWithEmail:success " + user.getEmail());
 
 
                             } else {
-                                Log.w("MyLogMainActivity", "createIserWithEmail:failure", task.getException());
+                                Log.w("MyLogMainActivity", "createUserWithEmail:failure", task.getException());
                                 Toast.makeText(getApplicationContext(), "Authentification failed",
                                         Toast.LENGTH_SHORT).show();
 
                             }
                         }
-                    });
-        }else
+                    }});
+        }
+        else
         {
             Toast.makeText(this, "Email or Password is empty!", Toast.LENGTH_SHORT).show();
         }
@@ -152,10 +174,45 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             {
                 signUp(edEmail.getText().toString(), edPassword.getText().toString());
             }
+            else
+                {
+                signIn(edEmail.getText().toString(),edPassword.getText().toString());
+            }
             }
         });
         AlertDialog dialog = dialogBuilder.create();
         dialog.show();
 
+    }
+    private void signIn(String email, String password)
+    {
+        if(!email.equals("") && !password.equals("")) {
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Log.d("MyLogMainActivity", "signInWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                if (user != null) {
+                                    Toast.makeText(getApplicationContext(), "SignIn done... user email: " + user.getEmail(),
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Log.w("MyLogMainActivity", "signInWithEmail:failure", task.getException());
+                                Toast.makeText(getApplicationContext(), "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
+        else
+        {
+            Toast.makeText(this, "Email or Password is empty!", Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void signOut()
+    {
+        mAuth.signOut();
     }
 }
