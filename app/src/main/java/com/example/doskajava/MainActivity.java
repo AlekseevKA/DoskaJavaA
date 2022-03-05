@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     private FirebaseAuth mAuth;
     private TextView userEmail;
+    private AlertDialog dialog;
 
 
 
@@ -127,11 +128,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
 
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                if(user != null){
-                                    Toast.makeText(getApplicationContext(), "SignUp done... user email: " + user.getEmail(),
-                                            Toast.LENGTH_SHORT).show();
-                                    Log.d("MyLogMainActivity", "createUserWithEmail:success " + user.getEmail());
+                                getUserData();
 
 
                             } else {
@@ -141,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                             }
                         }
-                    }});
+                    });
         }
         else
         {
@@ -178,9 +175,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 {
                 signIn(edEmail.getText().toString(),edPassword.getText().toString());
             }
+            dialog.dismiss();
             }
         });
-        AlertDialog dialog = dialogBuilder.create();
+        dialog = dialogBuilder.create();
         dialog.show();
 
     }
@@ -192,12 +190,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                Log.d("MyLogMainActivity", "signInWithEmail:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                if (user != null) {
-                                    Toast.makeText(getApplicationContext(), "SignIn done... user email: " + user.getEmail(),
-                                            Toast.LENGTH_SHORT).show();
-                                }
+
+                           getUserData();
+
                             } else {
                                 Log.w("MyLogMainActivity", "signInWithEmail:failure", task.getException());
                                 Toast.makeText(getApplicationContext(), "Authentication failed.",
@@ -214,5 +209,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void signOut()
     {
         mAuth.signOut();
+        getUserData();
     }
 }

@@ -16,7 +16,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.506"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@drawable/ic_my_ads"
+        android:src="@drawable/ic_my_ads"
+        />
 
     <TextView
         android:id="@+id/tvEmail"
