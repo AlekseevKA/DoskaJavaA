@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "495888116855",
+    "project_id": "tabladeanuncios-c1051",
+    "storage_bucket": "tabladeanuncios-c1051.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:495888116855:android:4b20b6d2c97bbb26c1aa72",
+        "android_client_info": {
+          "package_name": "com.example.doskajava"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "495888116855-5koujlgtbnb61741miov4qafpql6fjcl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2Z5__ekv_NA6NIETQ0BEoMTmQCdaGaIs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "495888116855-5koujlgtbnb61741miov4qafpql6fjcl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

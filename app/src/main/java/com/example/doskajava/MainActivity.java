@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     {
         nav_view = findViewById(R.id.nav_view);
         nav_view.setNavigationItemSelectedListener(this);
-
+drawerLayout =findViewById(R.id.drawerLayout);
         userEmail = nav_view.getHeaderView(0).findViewById(R.id.tvEmail);
 
         drawerLayout = findViewById(GravityCompat.START);
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Tabla");
 
-        myRef.setValue("Hello, World!");
+      //  myRef.setValue("Hello, World!");
 
         mAuth = FirebaseAuth.getInstance();
     }
