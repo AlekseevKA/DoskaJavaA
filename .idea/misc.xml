@@ -7,12 +7,14 @@
         <entry key="app/src/main/res/drawable-anydpi/ic_dm_ads.xml" value="0.4" />
         <entry key="app/src/main/res/drawable-anydpi/ic_my_ads.xml" value="0.4" />
         <entry key="app/src/main/res/drawable-anydpi/ic_pc_ads.xml" value="0.4" />
+        <entry key="app/src/main/res/drawable-anydpi/ic_save.xml" value="0.3925925925925926" />
         <entry key="app/src/main/res/drawable-anydpi/ic_sign_in.xml" value="0.4" />
         <entry key="app/src/main/res/drawable-anydpi/ic_sign_out.xml" value="0.4" />
         <entry key="app/src/main/res/drawable-anydpi/ic_sign_up.xml" value="0.4" />
         <entry key="app/src/main/res/drawable-anydpi/ic_smartphone_ads.xml" value="0.4" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2439209726443769" />
         <entry key="app/src/main/res/layout/edit_layout.xml" value="0.2507598784194529" />
+        <entry key="app/src/main/res/layout/main_content.xml" value="0.2507598784194529" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.375" />
         <entry key="app/src/main/res/layout/sign_up_layout.xml" value="0.2507598784194529" />
         <entry key="app/src/main/res/menu/drawer_main_menu.xml" value="0.37962962962962965" />
