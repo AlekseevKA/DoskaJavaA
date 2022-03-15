@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.doskajava.adapter.PostAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -30,6 +33,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.core.Tag;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private NavigationView nav_view;
     private DrawerLayout drawerLayout;
@@ -37,6 +43,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView userEmail;
     private AlertDialog dialog;
     private Toolbar toolbar;
+    private PostAdapter.OnItemClickCustom onItemClickCustom;
+    private RecyclerView rcView;
+    private PostAdapter postAdapter;
 
 
 
@@ -48,19 +57,49 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     private void init()
     {
+        setOnItemClickCustom();
+
+        rcView = findViewById(R.id.rcView);
+        rcView.setLayoutManager(new LinearLayoutManager(this));
+        List<NewPost> arrayTestPost = new ArrayList<>();
+        NewPost newPost = new NewPost();
+        newPost.setTitle("Mercedes");
+        newPost.setTel("68686868");
+        newPost.setPrice("100000");
+        newPost.setDisc("Машина в хорошем ржавом состоянии))");
+        arrayTestPost.add(newPost);
+        arrayTestPost.add(newPost);
+        arrayTestPost.add(newPost);
+        arrayTestPost.add(newPost);
+        arrayTestPost.add(newPost);
+        arrayTestPost.add(newPost);
+        arrayTestPost.add(newPost);
+        arrayTestPost.add(newPost);
+        arrayTestPost.add(newPost);
+        postAdapter = new PostAdapter(arrayTestPost, this, onItemClickCustom);
+        rcView.setAdapter(postAdapter);
         nav_view = findViewById(R.id.nav_view);
         nav_view.setNavigationItemSelectedListener(this);
         drawerLayout =findViewById(R.id.drawerLayout);
-
         toolbar = findViewById(R.id.toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.toggle_open, R.string.toggle_close);
         userEmail = nav_view.getHeaderView(0).findViewById(R.id.tvEmail);
-
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
-
         mAuth = FirebaseAuth.getInstance();
+
+
+
+
+    }
+    private void setOnItemClickCustom()
+    {
+        onItemClickCustom = new PostAdapter.OnItemClickCustom() {
+            @Override
+            public void onItemSelected(int position) {
+                Log.d("MyLog", "Position : " + position);
+            }
+        };
     }
 
     @Override
