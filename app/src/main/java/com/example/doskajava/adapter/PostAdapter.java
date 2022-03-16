@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doskajava.NewPost;
 import com.example.doskajava.R;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -57,7 +58,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolderData
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvPriceTel = itemView.findViewById(R.id.tvPriceTel);
-            tvDisc = itemView.findViewById(R.id.edDisc);
+            tvDisc = itemView.findViewById(R.id.tvDisc);
             imAds = itemView.findViewById(R.id.imAds);
             itemView.setOnClickListener(this);
 
@@ -65,9 +66,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolderData
         }
         public void setData(NewPost newPost)
         {
+            Picasso.get().load(newPost.getImageId()).into(imAds);
             tvTitle.setText(newPost.getTitle());
             String price_tel = "Цена: " + newPost.getPrice() + " Тел : " + newPost.getTel();
             tvPriceTel.setText(price_tel);
+            tvDisc.setText(newPost.getDisc());
+
         }
 
         @Override
@@ -78,6 +82,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolderData
     public interface OnItemClickCustom
     {
         public void onItemSelected(int position);
+    }
+    public void updateAdapter(List<NewPost> listData)
+    {
+        arrayPost.clear();
+        arrayPost.addAll(listData);
+        notifyDataSetChanged();
     }
 
 }

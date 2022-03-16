@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.doskajava.adapter.DataSender;
 import com.example.doskajava.adapter.PostAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -34,6 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.core.Tag;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private PostAdapter.OnItemClickCustom onItemClickCustom;
     private RecyclerView rcView;
     private PostAdapter postAdapter;
+    private DataSender dataSender;
 
 
 
@@ -61,22 +64,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         rcView = findViewById(R.id.rcView);
         rcView.setLayoutManager(new LinearLayoutManager(this));
-        List<NewPost> arrayTestPost = new ArrayList<>();
-        NewPost newPost = new NewPost();
-        newPost.setTitle("Mercedes");
-        newPost.setTel("68686868");
-        newPost.setPrice("100000");
-        newPost.setDisc("Машина в хорошем ржавом состоянии))");
-        arrayTestPost.add(newPost);
-        arrayTestPost.add(newPost);
-        arrayTestPost.add(newPost);
-        arrayTestPost.add(newPost);
-        arrayTestPost.add(newPost);
-        arrayTestPost.add(newPost);
-        arrayTestPost.add(newPost);
-        arrayTestPost.add(newPost);
-        arrayTestPost.add(newPost);
-        postAdapter = new PostAdapter(arrayTestPost, this, onItemClickCustom);
+        List<NewPost> arrayPost = new ArrayList<>();
+
+        postAdapter = new PostAdapter(arrayPost, this, onItemClickCustom);
         rcView.setAdapter(postAdapter);
         nav_view = findViewById(R.id.nav_view);
         nav_view.setNavigationItemSelectedListener(this);
@@ -88,9 +78,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         mAuth = FirebaseAuth.getInstance();
 
+        getDataDB();
+        DbManager dbManager = new DbManager(dataSender);
+        dbManager.getDataFromDb("Машины");
 
+    }
 
-
+    private void getDataDB()
+    {
+        dataSender = new DataSender() {
+            @Override
+            public void onDataRecived(List<NewPost> listData)
+            {
+                Collections.reverse(listData);
+                postAdapter.updateAdapter(listData);
+            }
+        };
     }
     private void setOnItemClickCustom()
     {
