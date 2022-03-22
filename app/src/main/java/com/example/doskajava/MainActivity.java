@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private RecyclerView rcView;
     private PostAdapter postAdapter;
     private DataSender dataSender;
+    private DbManager dbManager;
 
 
 
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mAuth = FirebaseAuth.getInstance();
 
         getDataDB();
-        DbManager dbManager = new DbManager(dataSender);
+        dbManager = new DbManager(dataSender);
         dbManager.getDataFromDb("Машины");
 
     }
@@ -137,35 +138,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (id)
         {
             case R.id.id_my_ads:
-                Toast.makeText(this, "Pressed id My Ads", Toast.LENGTH_SHORT).show();
+                dbManager.getMyAdsDataFromDb(mAuth.getUid());
                 break;
 
             case R.id.id_cars_ads:
-                Toast.makeText(this, "Pressed id cars", Toast.LENGTH_SHORT).show();
+                dbManager.getDataFromDb("Машины");
                 break;
 
 
             case R.id.id_pc_ads:
-                Toast.makeText(this, "Pressed id pc", Toast.LENGTH_SHORT).show();
+                dbManager.getDataFromDb("Компьютеры");
                 break;
 
             case R.id.id_my_smartphone_ads:
-                Toast.makeText(this, "Pressed id smart", Toast.LENGTH_SHORT).show();
+                dbManager.getDataFromDb("Смартфоны");
                 break;
             case R.id.id_dm_ads:
-                Toast.makeText(this, "Pressed id dm", Toast.LENGTH_SHORT).show();
+                dbManager.getDataFromDb("Бытовая техника");
                 break;
             case R.id.id_sign_up:
                 signUpDialog(R.string.sign_up, R.string.sign_up_button, 0);
-                Toast.makeText(this, "Pressed id sign up", Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.id_sign_in:
                 signUpDialog(R.string.sign_in, R.string.sign_in_button, 1);
-                Toast.makeText(this, "Pressed id sign in", Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.id_sign_out:
                 signOut();
-                Toast.makeText(this, "Pressed id sign out", Toast.LENGTH_SHORT).show();
+
                 break;
 
         }

@@ -66,6 +66,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolderData
         }
         public void setData(NewPost newPost)
         {
+
             Picasso.get().load(newPost.getImageId()).into(imAds);
             tvTitle.setText(newPost.getTitle());
             String price_tel = "Цена: " + newPost.getPrice() + " Тел : " + newPost.getTel();
