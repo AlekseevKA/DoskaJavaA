@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private PostAdapter postAdapter;
     private DataSender dataSender;
     private DbManager dbManager;
+    public static String MAUTH = "";
 
 
 
@@ -125,9 +126,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(currentUser != null)
         {
             userEmail.setText(currentUser.getEmail());
+            MAUTH = mAuth.getUid();
         }
-        else{
+        else {
             userEmail.setText(R.string.sign_in_or_ign_up);
+            MAUTH = "";
+
         }
 
     }
